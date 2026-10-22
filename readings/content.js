@@ -2,7 +2,7 @@
 window.ARCHIVE = {
   "name": "Snail Girl Folktale",
   "title": "The Snail Girl Folktale",
-  "homeHref": "/",
+  "homeHref": "../",
   "source": {
     "title": "The Snail Girl Folktale: The Persistence of Female Instrumentality Across Chinese History",
     "fileName": "Sofia Huang_[Snail Girl Folktale] .pdf",
