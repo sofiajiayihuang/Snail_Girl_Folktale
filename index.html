@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>The Snail Girl Folktale</title>
+<meta name="description" content="Three text readings: The Jin Dynasty, The Tang Dynasty, and The People’s Republic of China.">
+<link rel="stylesheet" href="styles.css">
+<script src="content.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+  <header id="header" data-region="全站导航">
+    <a class="wordmark" href="#/" data-region="名称标识">The Snail Girl</a>
+    <div id="header-center"></div>
+  </header>
+<div id="shell">
+  <main id="main" tabindex="-1"></main>
+</div>
+<dialog id="annotation" lang="zh-CN" aria-labelledby="annotation-title">
+  <div class="annotation-head"><h2 id="annotation-title">添加批注</h2><button id="note-close" aria-label="关闭批注">关闭</button></div>
+  <p class="annotation-context" id="note-context"></p>
+  <section class="writing-guide">
+    <h3>位置＋触发动作＋期待结果</h3>
+    <p>例如：</p>
+    <ul>
+      <li><strong>菜单：</strong>点击 Menu 后，保留参考网站右侧面板出现、正文向左移动的联动效果。</li>
+      <li><strong>字体：</strong>保留这里的字距和行距；更换项目名称后，仍保持相近的文字密度。</li>
+      <li><strong>图片区域：</strong>本轮只保留这个比例的占位框，编号为 project-01-cover，下一轮再加入图片。</li>
+      <li><strong>三维区域：</strong>删除这里的三维物体，保留周围留白，不添加替代装饰。</li>
+    </ul>
+  </section>
+  <form id="note-form">
+    <label for="note-body">你的批注</label>
+    <textarea id="note-body" rows="4" placeholder="位置：…&#10;触发动作：…&#10;期待结果：…" required></textarea>
+    <div class="annotation-actions"><button class="solid" type="submit">保存批注</button><button id="note-export" type="button">导出全部批注</button></div>
+  </form>
+  <p class="local-note">批注仅保存在当前浏览器。导出后，可在下一轮发给 AI。</p>
+  <p id="note-status" role="status"></p>
+  <details id="saved-notes"><summary>已保存批注 <span id="saved-count">0</span></summary><div id="note-list"></div></details>
+</dialog>
+<div id="toast" role="status"></div>
+</body>
+</html>
