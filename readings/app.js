@@ -3,7 +3,7 @@
   const data=window.ARCHIVE, sections=data.sections;
   const $=s=>document.querySelector(s);
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const main=$('#main'),center=$('#header-center');
+  const main=$('#main'),center=$('#header-center'),artwork=$('#reading-artwork');
   const dialog=$('#annotation');
   const positions=new Map();
   let currentRoute='',notes=[],noteTarget=null;
@@ -11,6 +11,7 @@
   try{const saved=JSON.parse(localStorage.getItem(storageKey)||'[]');if(Array.isArray(saved))notes=saved.filter(n=>n&&typeof n.body==='string'&&typeof n.path==='string');}catch{}
   const homeHref=()=>data.homeHref||'#/';
   const sectionUrl=s=>'#/read/'+s.id;
+  const shellImages={'jin-dynasty':'white-conch','tang-dynasty':'blue-conch','peoples-republic-of-china':'red-conch'};
   const link=(href,label,attrs='')=>'<a href="'+esc(href)+'" '+attrs+'>'+esc(label)+'</a>';
   const searchForm=(value='')=>'<form class="center-search search-form" role="search"><input name="q" type="search" aria-label="Search text" placeholder="Search" value="'+esc(value)+'" autocomplete="off"></form>';
   $('.skip').addEventListener('click',e=>{e.preventDefault();main.focus({preventScroll:true});});
@@ -41,13 +42,14 @@
   }
   function reading(s,params){
     const index=sections.indexOf(s),next=sections[(index+1)%sections.length],q=params.get('highlight')||'';
+    artwork.querySelector('img').src='images/'+shellImages[s.id]+'.png';artwork.hidden=false;
     center.innerHTML='';
     main.innerHTML='<article class="reading-page" data-region="'+esc(s.title)+'"><header class="reading-heading"><h1>'+esc(s.title)+'</h1></header><div class="reading-body">'+s.paragraphs.map((t,i)=>
       '<p id="paragraph-'+(i+1)+'" data-region="'+esc(s.title)+' · Paragraph '+(i+1)+'">'+paragraphHtml(t,s,i,q)+'</p>').join('')+'</div>'+
       '<section class="reading-footnotes" aria-labelledby="references-title"><h2 id="references-title">Notes</h2><ol>'+s.footnotes.map(note=>{
         const paragraph=s.paragraphs.findIndex(p=>p.includes('{{ref:'+note.id+'}}'))+1;
         return '<li id="note-'+note.id+'" value="'+note.id+'" data-region="'+esc(s.title)+' · Note '+note.id+'"><p>'+esc(note.text)+'</p>'+link(sectionUrl(s)+'?paragraph='+paragraph,'Back to text','class="note-return" aria-label="Return to reference '+note.id+'"')+'</li>';
-      }).join('')+'</ol></section><nav class="reading-navigation" aria-label="Reading navigation">'+link(homeHref(),'Back to Home')+link(sectionUrl(next),next.title+' ⤶')+'</nav></article>';
+      }).join('')+'</ol></section><nav class="reading-navigation" aria-label="Reading navigation">'+link(homeHref(),'Back to Home')+'<a class="next-reading" href="'+sectionUrl(next)+'"><img src="images/'+shellImages[next.id]+'.png" alt="" width="104" height="104" loading="lazy" aria-hidden="true"><span>'+esc(next.title)+' ⤶</span></a></nav></article>';
   }
   function search(q){
     center.innerHTML=searchForm(q);const hits=[];
@@ -66,6 +68,7 @@
     main.innerHTML='<section class="reading-page text-page"><h1>'+title+'</h1>'+(key==='about'?'<p>'+esc(data.source.title)+'</p><p>The three readings retain the main sections and footnotes from the supplied manuscript. The introduction and conclusion are not included here.</p>':'<p>Annotations are stored only in this browser. They are not uploaded or shared. Export your notes before changing devices, browsers or website addresses.</p>')+'<nav class="reading-navigation">'+link(homeHref(),'Back to Home')+'</nav></section>';
   }
   function render(){
+    artwork.hidden=true;
     currentRoute=location.hash||'#/';
     const raw=currentRoute.slice(1),split=raw.indexOf('?');
     const path=(split<0?raw:raw.slice(0,split)).replace(/\/$/,'')||'/';

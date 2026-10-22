@@ -68,3 +68,13 @@
 }
 @media(max-width:380px){.wordmark{font-size:14px}.theme-button{gap:12px;padding:15px 13px}.theme-label{font-size:11px;letter-spacing:.4px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* A quiet static illustration occupies only the left margin of the reading column. */
+.reading-artwork{position:fixed;left:0;top:24vh;width:max(0px,calc((100vw - 625px)/2));height:52vh;display:grid;place-items:center;pointer-events:none;user-select:none}
+.reading-artwork img{display:block;width:max(0px,calc(100% - 48px));max-width:460px;height:100%;object-fit:contain;opacity:.3;pointer-events:none;user-select:none}
+
+.reading-artwork[hidden]{display:none}
+.reading-navigation:has(.next-reading){margin-top:160px}
+.next-reading{position:relative}
+.next-reading img{position:absolute;right:0;bottom:calc(100% + 30px);width:104px;height:104px;object-fit:contain;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s}
+.next-reading:hover img,.next-reading:focus-visible img{opacity:.3;visibility:visible}
