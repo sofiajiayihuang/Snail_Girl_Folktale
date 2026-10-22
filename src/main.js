@@ -77,7 +77,7 @@ async function loadAssets(){
   const halo=createContourParticles(artwork,OBJECTS[i].particleColor);
   halo.points.position.copy(artwork.position);halos.push(halo);places[i].add(halo.points);
  });
- assetsReady=true;host.dataset.ready='true';$('#loading').remove();
+ assetsReady=true;host.dataset.ready='true';document.body.classList.remove('is-loading');$('#loading').remove();
  host.dataset.layout=JSON.stringify(places.map((place,i)=>({side:i,position:place.position.toArray(),artworkWidth:ARTWORK_WIDTH*OBJECTS[i].scale})));
  $('#status').textContent=errors.length?'Some models could not be loaded. Fallback shapes are shown.':'The three shells are ready to explore.';
 }
